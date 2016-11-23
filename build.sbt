@@ -16,7 +16,7 @@ resolvers ++= Seq(
   Resolver.mavenLocal
 )
 
-addSbtPlugin("com.typesafe.sbt" %% "sbt-web" % "1.0.2")
+addSbtPlugin("com.typesafe.sbt" %% "sbt-web" % "1.3.0")
 
 publishMavenStyle := true
 
