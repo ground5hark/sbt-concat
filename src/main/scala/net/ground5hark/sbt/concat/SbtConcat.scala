@@ -54,7 +54,7 @@ object SbtConcat extends AutoPlugin {
       fileNames match {
         case Left(fileNamesSeq) => (groupName, fileNamesSeq)
         case Right(fileNamesPathFinder) =>
-          val r = fileNamesPathFinder.pair(Path.relativeTo(srcDirs ++ webModuleDirs) | Path.flat)
+          val r = fileNamesPathFinder.pair(Path.relativeTo(srcDirs ++ webModuleDirs) | Path.basic)
           (groupName, r.map(_._2))
         case u => sys.error(s"Expected Seq[String] or PathFinder, but got $u")
       }
