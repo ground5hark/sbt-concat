@@ -84,7 +84,6 @@ object SbtConcat extends AutoPlugin {
               if (mapping.nonEmpty) {
                 // TODO This is not as memory efficient as it could be, write to file instead
                 concatGroups.getOrElseUpdate(groupName, new StringBuilder)
-                  .append(s"\n/** $fileName **/\n")
                   .append(IO.read(mapping.head._1))
                 reverseMapping.remove(fileName)
               } else logValue.warn(s"Unable to process $fileName. Not found.")
