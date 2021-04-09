@@ -42,7 +42,7 @@ object SbtConcat extends AutoPlugin {
 
   override def projectSettings = Seq(
     groups := ListBuffer.empty[ConcatGroup],
-    includeFilter in concat := NotHiddenFileFilter,
+    concat / includeFilter := NotHiddenFileFilter,
     parentDir := "",
     concat := concatFiles.value
   )
@@ -64,15 +64,15 @@ object SbtConcat extends AutoPlugin {
     val logValue = streams.value.log
     mappings: Seq[PathMapping] =>
       val groupsValue = toFileNames(groups.value,
-        (sourceDirectories in Assets).value,
-        (webModuleDirectories in Assets).value)
+        (Assets / sourceDirectories).value,
+        (Assets / webModuleDirectories).value)
 
       val groupMappings = if (groupsValue.nonEmpty) {
         logValue.info(s"Building ${groupsValue.size} concat group(s)")
         // Mutable map so we can pop entries we've already seen, in case there are similarly named files
         val reverseMapping = ReverseGroupMapping.get(groupsValue, logValue)
         val concatGroups = mutable.Map.empty[String, StringBuilder]
-        val filteredMappings = mappings.filter(m => (includeFilter in concat).value.accept(m._1) && m._1.isFile)
+        val filteredMappings = mappings.filter(m => (concat / includeFilter).value.accept(m._1) && m._1.isFile)
         val targetDir = webTarget.value / parentDir.value
 
         groupsValue.foreach {
